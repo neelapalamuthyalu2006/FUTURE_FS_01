@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neelapala Muthyalu – Portfolio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    * { box-sizing: border-box; }
+    .font-heading { font-family: 'Syne', sans-serif; }
+    .font-body { font-family: 'DM Sans', sans-serif; }
+
+    .app-wrapper {
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .grain-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: blobFloat 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes blobFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -20px) scale(1.1); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .anim-fade-up { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+    .anim-slide-in { opacity: 0; animation: slideIn 0.6s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+    .delay-7 { animation-delay: 0.7s; }
+
+    .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+    .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .skill-bar-fill { width: 0; transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .skill-bar-fill.animate { width: var(--fill); }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .contact-input:focus { outline: none; }
+
+    .timeline-dot {
+      width: 14px; height: 14px; border-radius: 50%; border: 3px solid;
+      position: absolute; left: -7px; top: 6px;
+    }
+
+    section { position: relative; z-index: 1; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper" id="appWrapper" style="background-color: #0a0a0f;">
+   <div class="grain-overlay"></div><!-- NAV -->
+   <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 transition-all duration-300" style="background: rgba(10,10,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center"><a href="#hero" class="font-heading font-bold text-xl" id="navLogo" style="color: #e4ff1a;">NM</a>
+     <div class="hidden md:flex gap-8"><a href="#about" class="nav-link font-body text-sm tracking-wide" style="color: #a1a1b5;">About</a> <a href="#projects" class="nav-link font-body text-sm tracking-wide" style="color: #a1a1b5;">Projects</a> <a href="#skills" class="nav-link font-body text-sm tracking-wide" style="color: #a1a1b5;">Skills</a> <a href="#education" class="nav-link font-body text-sm tracking-wide" style="color: #a1a1b5;">Education</a> <a href="#contact" class="nav-link font-body text-sm tracking-wide" style="color: #a1a1b5;">Contact</a>
+     </div><button id="mobileMenuBtn" class="md:hidden" style="color: #a1a1b5;" aria-label="Open menu"> <i data-lucide="menu" style="width:24px;height:24px;"></i> </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-3"><a href="#about" class="font-body text-sm" style="color: #a1a1b5;">About</a> <a href="#projects" class="font-body text-sm" style="color: #a1a1b5;">Projects</a> <a href="#skills" class="font-body text-sm" style="color: #a1a1b5;">Skills</a> <a href="#education" class="font-body text-sm" style="color: #a1a1b5;">Education</a> <a href="#contact" class="font-body text-sm" style="color: #a1a1b5;">Contact</a>
+    </div>
+   </nav><!-- HERO -->
+   <section id="hero" class="relative min-h-full flex items-center justify-center px-6 overflow-hidden" style="padding-top: 80px;">
+    <div class="hero-blob" style="width:400px;height:400px;background:#e4ff1a;top:10%;right:10%;"></div>
+    <div class="hero-blob" style="width:300px;height:300px;background:#6366f1;bottom:15%;left:5%;animation-delay:2s;"></div>
+    <div class="text-center relative z-10 max-w-3xl">
+     <p class="font-body text-sm tracking-[0.3em] uppercase mb-4 anim-fade-up" style="color: #e4ff1a;">Web Development Enthusiast</p>
+     <h1 id="heroName" class="font-heading font-800 text-5xl md:text-7xl lg:text-8xl leading-tight mb-6 anim-fade-up delay-2" style="color: #eeeef0;">NEELAPALA<br>
+      MUTHYALU</h1>
+     <p id="heroTagline" class="font-body text-lg md:text-xl mb-10 anim-fade-up delay-3" style="color: #a1a1b5;">Building the web, one line of code at a time.</p>
+     <div class="flex gap-4 justify-center anim-fade-up delay-4"><a href="#projects" class="font-heading font-semibold text-sm px-8 py-3 rounded-full transition-all duration-300 hover:scale-105" style="background: #e4ff1a; color: #0a0a0f;">View Projects</a> <a href="#contact" class="font-heading font-semibold text-sm px-8 py-3 rounded-full border transition-all duration-300 hover:scale-105" style="border-color: #2a2a3a; color: #eeeef0;">Get in Touch</a>
+     </div>
+    </div>
+   </section><!-- ABOUT -->
+   <section id="about" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="scroll-reveal">
+      <p class="font-body text-sm tracking-[0.2em] uppercase mb-3" style="color: #e4ff1a;">About Me</p>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl mb-8" style="color: #eeeef0;">Who I Am</h2>
+     </div>
+     <div class="grid md:grid-cols-5 gap-12 items-start">
+      <div class="md:col-span-3 scroll-reveal">
+       <p id="aboutText" class="font-body text-lg leading-relaxed mb-6" style="color: #a1a1b5;">B.Tech 2nd year Computer Science student interested in Web Development. Skilled in HTML, CSS, and basic JavaScript. Passionate about building simple web applications and learning new technologies.</p>
+       <div class="flex flex-wrap gap-3 mt-6"><span class="font-body text-xs px-4 py-2 rounded-full" style="background: rgba(228,255,26,0.1); color: #e4ff1a; border: 1px solid rgba(228,255,26,0.2);">HTML</span> <span class="font-body text-xs px-4 py-2 rounded-full" style="background: rgba(228,255,26,0.1); color: #e4ff1a; border: 1px solid rgba(228,255,26,0.2);">CSS</span> <span class="font-body text-xs px-4 py-2 rounded-full" style="background: rgba(228,255,26,0.1); color: #e4ff1a; border: 1px solid rgba(228,255,26,0.2);">JavaScript</span> <span class="font-body text-xs px-4 py-2 rounded-full" style="background: rgba(228,255,26,0.1); color: #e4ff1a; border: 1px solid rgba(228,255,26,0.2);">Java</span>
+       </div>
+      </div>
+      <div class="md:col-span-2 scroll-reveal" style="animation-delay: 0.2s;">
+       <div class="rounded-2xl p-6" style="background: #111118; border: 1px solid #1e1e2a;">
+        <div class="flex items-center gap-3 mb-4"><i data-lucide="map-pin" style="width:18px;height:18px;color:#e4ff1a;"></i> <span class="font-body text-sm" style="color: #a1a1b5;">Chinnayagudum</span>
+        </div>
+        <div class="flex items-center gap-3 mb-4"><i data-lucide="phone" style="width:18px;height:18px;color:#e4ff1a;"></i> <span class="font-body text-sm" style="color: #a1a1b5;">9008380187</span>
+        </div>
+        <div class="flex items-center gap-3 mb-4"><i data-lucide="mail" style="width:18px;height:18px;color:#e4ff1a;"></i> <span class="font-body text-sm" style="color: #a1a1b5;">neelapalamuthyalu@gmail.com</span>
+        </div>
+        <div class="flex items-center gap-3"><i data-lucide="globe" style="width:18px;height:18px;color:#e4ff1a;"></i> <span class="font-body text-sm" style="color: #a1a1b5;">www.urealistyash.com</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- PROJECTS -->
+   <section id="projects" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="scroll-reveal">
+      <p class="font-body text-sm tracking-[0.2em] uppercase mb-3" style="color: #e4ff1a;">Projects</p>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl mb-12" style="color: #eeeef0;">What I've Built</h2>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6">
+      <div class="project-card scroll-reveal rounded-2xl p-6 relative overflow-hidden" style="background: #111118; border: 1px solid #1e1e2a;">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(228,255,26,0.1);"><i data-lucide="layout" style="width:22px;height:22px;color:#e4ff1a;"></i>
+       </div>
+       <h3 class="font-heading font-bold text-lg mb-2" style="color: #eeeef0;">Portfolio Website</h3>
+       <p class="font-body text-sm leading-relaxed mb-4" style="color: #a1a1b5;">Developed a personal portfolio using HTML and CSS to showcase skills and projects.</p>
+       <div class="flex gap-2 flex-wrap"><span class="text-xs font-body px-3 py-1 rounded-full" style="background:#1e1e2a; color:#a1a1b5;">HTML</span> <span class="text-xs font-body px-3 py-1 rounded-full" style="background:#1e1e2a; color:#a1a1b5;">CSS</span>
+       </div>
+      </div>
+      <div class="project-card scroll-reveal rounded-2xl p-6 relative overflow-hidden" style="background: #111118; border: 1px solid #1e1e2a; animation-delay: 0.15s;">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(228,255,26,0.1);"><i data-lucide="calculator" style="width:22px;height:22px;color:#e4ff1a;"></i>
+       </div>
+       <h3 class="font-heading font-bold text-lg mb-2" style="color: #eeeef0;">Calculator Web App</h3>
+       <p class="font-body text-sm leading-relaxed mb-4" style="color: #a1a1b5;">Created a fully functional calculator using HTML, CSS, and JavaScript.</p>
+       <div class="flex gap-2 flex-wrap"><span class="text-xs font-body px-3 py-1 rounded-full" style="background:#1e1e2a; color:#a1a1b5;">HTML</span> <span class="text-xs font-body px-3 py-1 rounded-full" style="background:#1e1e2a; color:#a1a1b5;">CSS</span> <span class="text-xs font-body px-3 py-1 rounded-full" style="background:#1e1e2a; color:#a1a1b5;">JS</span>
+       </div>
+      </div>
+      <div class="project-card scroll-reveal rounded-2xl p-6 relative overflow-hidden" style="background: #111118; border: 1px solid #1e1e2a; animation-delay: 0.3s;">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(228,255,26,0.1);"><i data-lucide="check-square" style="width:22px;height:22px;color:#e4ff1a;"></i>
+       </div>
+       <h3 class="font-heading font-bold text-lg mb-2" style="color: #eeeef0;">To-Do List Web App</h3>
+       <p class="font-body text-sm leading-relaxed mb-4" style="color: #a1a1b5;">Built a task manager using JavaScript for efficient task tracking.</p>
+       <div class="flex gap-2 flex-wrap"><span class="text-xs font-body px-3 py-1 rounded-full" style="background:#1e1e2a; color:#a1a1b5;">JavaScript</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SKILLS -->
+   <section id="skills" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="scroll-reveal">
+      <p class="font-body text-sm tracking-[0.2em] uppercase mb-3" style="color: #e4ff1a;">Skills</p>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl mb-12" style="color: #eeeef0;">My Toolkit</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div class="space-y-6">
+       <div class="scroll-reveal skill-item">
+        <div class="flex justify-between mb-2">
+         <span class="font-body text-sm font-medium" style="color:#eeeef0;">CSS</span><span class="font-body text-xs" style="color:#a1a1b5;">80%</span>
+        </div>
+        <div class="h-2 rounded-full" style="background:#1e1e2a;">
+         <div class="skill-bar-fill h-full rounded-full" style="--fill:80%;background:#e4ff1a;"></div>
+        </div>
+       </div>
+       <div class="scroll-reveal skill-item">
+        <div class="flex justify-between mb-2">
+         <span class="font-body text-sm font-medium" style="color:#eeeef0;">Basic JavaScript</span><span class="font-body text-xs" style="color:#a1a1b5;">60%</span>
+        </div>
+        <div class="h-2 rounded-full" style="background:#1e1e2a;">
+         <div class="skill-bar-fill h-full rounded-full" style="--fill:60%;background:#e4ff1a;"></div>
+        </div>
+       </div>
+       <div class="scroll-reveal skill-item">
+        <div class="flex justify-between mb-2">
+         <span class="font-body text-sm font-medium" style="color:#eeeef0;">Basic Java</span><span class="font-body text-xs" style="color:#a1a1b5;">50%</span>
+        </div>
+        <div class="h-2 rounded-full" style="background:#1e1e2a;">
+         <div class="skill-bar-fill h-full rounded-full" style="--fill:50%;background:#e4ff1a;"></div>
+        </div>
+       </div>
+      </div>
+      <div class="space-y-6">
+       <div class="scroll-reveal skill-item">
+        <div class="flex justify-between mb-2">
+         <span class="font-body text-sm font-medium" style="color:#eeeef0;">MS Office</span><span class="font-body text-xs" style="color:#a1a1b5;">75%</span>
+        </div>
+        <div class="h-2 rounded-full" style="background:#1e1e2a;">
+         <div class="skill-bar-fill h-full rounded-full" style="--fill:75%;background:#e4ff1a;"></div>
+        </div>
+       </div>
+       <div class="scroll-reveal skill-item">
+        <div class="flex justify-between mb-2">
+         <span class="font-body text-sm font-medium" style="color:#eeeef0;">Basic WebPage Design</span><span class="font-body text-xs" style="color:#a1a1b5;">70%</span>
+        </div>
+        <div class="h-2 rounded-full" style="background:#1e1e2a;">
+         <div class="skill-bar-fill h-full rounded-full" style="--fill:70%;background:#e4ff1a;"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- EDUCATION -->
+   <section id="education" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="scroll-reveal">
+      <p class="font-body text-sm tracking-[0.2em] uppercase mb-3" style="color: #e4ff1a;">Education</p>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl mb-12" style="color: #eeeef0;">My Journey</h2>
+     </div>
+     <div class="relative ml-4" style="border-left: 2px solid #1e1e2a;">
+      <div class="scroll-reveal pl-8 pb-12 relative">
+       <div class="timeline-dot" style="background: #0a0a0f; border-color: #e4ff1a;"></div>
+       <p class="font-body text-xs tracking-wider uppercase mb-1" style="color: #e4ff1a;">2024 – 2028</p>
+       <h3 class="font-heading font-bold text-lg mb-1" style="color: #eeeef0;">Srivasavi Engineering College</h3>
+       <p class="font-body text-sm" style="color: #a1a1b5;">B.Tech – Computer Science Engineering</p>
+      </div>
+      <div class="scroll-reveal pl-8 pb-12 relative">
+       <div class="timeline-dot" style="background: #0a0a0f; border-color: #e4ff1a;"></div>
+       <p class="font-body text-xs tracking-wider uppercase mb-1" style="color: #e4ff1a;">2022 – 2024</p>
+       <h3 class="font-heading font-bold text-lg mb-1" style="color: #eeeef0;">Vidhya Vikas Junior College</h3>
+       <p class="font-body text-sm" style="color: #a1a1b5;">Percentage: 95%</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- CERTIFICATIONS -->
+   <section id="certifications" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+     <div class="scroll-reveal">
+      <p class="font-body text-sm tracking-[0.2em] uppercase mb-3" style="color: #e4ff1a;">Certifications</p>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl mb-12" style="color: #eeeef0;">Credentials</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-5">
+      <div class="scroll-reveal rounded-2xl p-5 flex items-start gap-4" style="background:#111118; border:1px solid #1e1e2a;">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" style="background:rgba(228,255,26,0.1);"><i data-lucide="award" style="width:18px;height:18px;color:#e4ff1a;"></i>
+       </div>
+       <div>
+        <h3 class="font-heading font-semibold text-sm mb-1" style="color:#eeeef0;">Cloud Computing Fundamentals</h3>
+        <p class="font-body text-xs" style="color:#a1a1b5;">Global Certification</p>
+       </div>
+      </div>
+      <div class="scroll-reveal rounded-2xl p-5 flex items-start gap-4" style="background:#111118; border:1px solid #1e1e2a;">
+       <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1" style="background:rgba(228,255,26,0.1);"><i data-lucide="cpu" style="width:18px;height:18px;color:#e4ff1a;"></i>
+       </div>
+       <div>
+        <h3 class="font-heading font-semibold text-sm mb-1" style="color:#eeeef0;">Agentic AI Training</h3>
+        <p class="font-body text-xs" style="color:#a1a1b5;">1 Week Workshop</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CONTACT -->
+   <section id="contact" class="py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+     <div class="scroll-reveal text-center mb-12">
+      <p class="font-body text-sm tracking-[0.2em] uppercase mb-3" style="color: #e4ff1a;">Contact</p>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl mb-4" style="color: #eeeef0;">Let's Connect</h2>
+      <p class="font-body" style="color:#a1a1b5;">Have a project idea or just want to say hello?</p>
+     </div>
+     <form id="contactForm" class="scroll-reveal space-y-5">
+      <div class="grid md:grid-cols-2 gap-5">
+       <div><label for="nameInput" class="font-body text-xs block mb-2" style="color:#a1a1b5;">Name</label> <input id="nameInput" type="text" class="contact-input w-full font-body text-sm px-4 py-3 rounded-xl" style="background:#111118; border:1px solid #1e1e2a; color:#eeeef0;" placeholder="Your name" required>
+       </div>
+       <div><label for="emailInput" class="font-body text-xs block mb-2" style="color:#a1a1b5;">Email</label> <input id="emailInput" type="email" class="contact-input w-full font-body text-sm px-4 py-3 rounded-xl" style="background:#111118; border:1px solid #1e1e2a; color:#eeeef0;" placeholder="your@email.com" required>
+       </div>
+      </div>
+      <div><label for="msgInput" class="font-body text-xs block mb-2" style="color:#a1a1b5;">Message</label> <textarea id="msgInput" rows="5" class="contact-input w-full font-body text-sm px-4 py-3 rounded-xl resize-none" style="background:#111118; border:1px solid #1e1e2a; color:#eeeef0;" placeholder="Tell me about your project..." required></textarea>
+      </div><button type="submit" class="font-heading font-semibold text-sm px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 w-full md:w-auto" style="background:#e4ff1a; color:#0a0a0f;">Send Message</button>
+      <div id="formMsg" class="hidden font-body text-sm text-center mt-3 py-2 rounded-lg"></div>
+     </form>
+    </div>
+   </section><!-- FOOTER -->
+   <footer class="py-10 px-6 text-center" style="border-top:1px solid #1e1e2a;">
+    <p class="font-body text-sm" style="color:#a1a1b5;">© 2025 Neelapala Muthyalu. Built with passion.</p>
+   </footer>
+  </div>
+  <script>
+    // Default config
+    const defaultConfig = {
+      background_color: '#0a0a0f',
+      surface_color: '#111118',
+      text_color: '#eeeef0',
+      primary_action: '#e4ff1a',
+      secondary_action: '#a1a1b5',
+      font_family: 'Syne',
+      font_size: 16,
+      hero_name: 'NEELAPALA MUTHYALU',
+      hero_tagline: 'Building the web, one line of code at a time.',
+      about_text: 'B.Tech 2nd year Computer Science student interested in Web Development. Skilled in HTML, CSS, and basic JavaScript. Passionate about building simple web applications and learning new technologies.'
+    };
+
+    function applyConfig(config) {
+      const bg = config.background_color || defaultConfig.background_color;
+      const surface = config.surface_color || defaultConfig.surface_color;
+      const text = config.text_color || defaultConfig.text_color;
+      const primary = config.primary_action || defaultConfig.primary_action;
+      const secondary = config.secondary_action || defaultConfig.secondary_action;
+      const font = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      // Background
+      document.getElementById('appWrapper').style.backgroundColor = bg;
+
+      // Hero
+      document.getElementById('heroName').textContent = config.hero_name || defaultConfig.hero_name;
+      document.getElementById('heroTagline').textContent = config.hero_tagline || defaultConfig.hero_tagline;
+      document.getElementById('aboutText').textContent = config.about_text || defaultConfig.about_text;
+
+      // Colors across elements
+      document.querySelectorAll('.font-heading').forEach(el => {
+        el.style.fontFamily = `${font}, sans-serif`;
+      });
+      document.querySelectorAll('.font-body').forEach(el => {
+        el.style.fontFamily = `DM Sans, sans-serif`;
+      });
+
+      // Font size scaling
+      const heroName = document.getElementById('heroName');
+      if (heroName) heroName.style.fontSize = `${fontSize * 3.5}px`;
+      document.getElementById('heroTagline').style.fontSize = `${fontSize * 1.2}px`;
+
+      // Primary action color
+      document.querySelectorAll('[style*="color: #e4ff1a"], [style*="color:#e4ff1a"]').forEach(el => {
+        el.style.color = primary;
+      });
+      document.querySelectorAll('[style*="background: #e4ff1a"], [style*="background:#e4ff1a"]').forEach(el => {
+        el.style.background = primary;
+        el.style.color = bg;
+      });
+      document.getElementById('navLogo').style.color = primary;
+
+      // Nav link underline color
+      document.querySelectorAll('.nav-link').forEach(l => {
+        l.style.setProperty('--underline-color', primary);
+      });
+
+      // Surface color
+      document.querySelectorAll('[style*="background: #111118"], [style*="background:#111118"]').forEach(el => {
+        el.style.background = surface;
+      });
+
+      // Secondary text
+      document.querySelectorAll('[style*="color: #a1a1b5"], [style*="color:#a1a1b5"]').forEach(el => {
+        el.style.color = secondary;
+      });
+
+      // Main text
+      document.querySelectorAll('[style*="color: #eeeef0"], [style*="color:#eeeef0"]').forEach(el => {
+        el.style.color = text;
+      });
+    }
+
+    // Element SDK init
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => { applyConfig(config); },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => config.primary_action || defaultConfig.primary_action, set: (v) => { config.primary_action = v; window.elementSdk.setConfig({ primary_action: v }); } },
+            { get: () => config.secondary_action || defaultConfig.secondary_action, set: (v) => { config.secondary_action = v; window.elementSdk.setConfig({ secondary_action: v }); } },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['hero_name', config.hero_name || defaultConfig.hero_name],
+          ['hero_tagline', config.hero_tagline || defaultConfig.hero_tagline],
+          ['about_text', config.about_text || defaultConfig.about_text],
+        ])
+      });
+    }
+
+    // Mobile menu
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+    document.querySelectorAll('#mobileMenu a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden'));
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // Animate skill bars
+          if (e.target.classList.contains('skill-item')) {
+            const bar = e.target.querySelector('.skill-bar-fill');
+            if (bar) bar.classList.add('animate');
+          }
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('formMsg');
+      msg.classList.remove('hidden');
+      msg.style.color = '#e4ff1a';
+      msg.style.background = 'rgba(228,255,26,0.1)';
+      msg.textContent = '✓ Message sent! (Demo — no backend connected)';
+      e.target.reset();
+      setTimeout(() => msg.classList.add('hidden'), 4000);
+    });
+
+    // Nav link underline styles
+    const style = document.createElement('style');
+    style.textContent = `.nav-link::after { background: var(--underline-color, #e4ff1a); }`;
+    document.head.appendChild(style);
+
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e9b550321b6380b',t:'MTc3NTc1Njc5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
